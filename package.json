@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "lint": "eslint \"../Carver_Edision/**/*.js\" --quiet",
-    "format": "prettier \"../Carver_Edision/**/*.js\" --write"
+    "build": "NODE_ENV=production webpack",
+    "lint": "eslint \"../Carver_Edison/**/*.js\" --quiet",
+    "format": "prettier \"../Carver_Edison/**/*.js\" --write"
   },
   "repository": {
     "type": "git",
@@ -21,9 +21,11 @@
   },
   "homepage": "https://github.com/jenaepen/Carver_Edison#readme",
   "dependencies": {
+    "css-loader": "^3.4.2",
     "path": "^0.12.7",
     "react": "^16.13.0",
-    "react-dom": "^16.13.0"
+    "react-dom": "^16.13.0",
+    "react-router-dom": "^5.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
