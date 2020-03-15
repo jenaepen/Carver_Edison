@@ -1,13 +1,16 @@
 const path = require("path");
 module.exports = {
-  entry: "index.js",
+  entry: "./src/index.js",
   output: {
     filename: "bundle.js",
     path: path.join(__dirname, "build")
   },
   devServer: {
     publicPath: "/build/",
-    port: 8000
+    port: 8080,
+    proxy:{
+        "/" : 'http://localhost:3000'
+    }
   },
   mode: process.env.NODE_ENV,
   module: {
@@ -25,7 +28,7 @@ module.exports = {
       {
         test: /\.css?/,
         exclude: /node_modules/,
-        use: ["style-loader", "css-loader", "sass-loader"]
+        use: ["style-loader", "css-loader"]
       }
     ]
   }
