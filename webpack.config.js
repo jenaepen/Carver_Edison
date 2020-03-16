@@ -8,8 +8,8 @@ module.exports = {
   devServer: {
     publicPath: "/build/",
     port: 8080,
-    proxy:{
-        "/" : 'http://localhost:3000'
+    proxy: {
+      "/": "http://localhost:3000"
     }
   },
   mode: process.env.NODE_ENV,
@@ -27,7 +27,6 @@ module.exports = {
       },
       {
         test: /\.css?/,
-        exclude: /node_modules/,
         use: ["style-loader", "css-loader"]
       }
     ]

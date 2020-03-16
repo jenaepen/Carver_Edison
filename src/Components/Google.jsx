@@ -11,8 +11,8 @@ class Google extends Component {
 
   render() {
     const responseGoogle = response => {
-      //sets name to user name
-      this.setState({ name: response.profileObj.name, login: true });
+      if (response.profileObj)
+        this.setState({ name: response.profileObj.givenName, login: true });
     };
 
     return (
@@ -25,7 +25,6 @@ class Google extends Component {
                 buttonText="Signin with Google"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
-                redirectUri={"/budget"}
                 cookiePolicy={"single_host_origin"}
               />
             ) : (
@@ -36,7 +35,6 @@ class Google extends Component {
           <Route path="/budget">
             <Budget name={this.state.name} />
           </Route>
-          {/*  <Route exact={true} path="/"> <Google /></Route> */}
         </Router>
       </div>
     );

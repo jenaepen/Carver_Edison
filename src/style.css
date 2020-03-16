@@ -1,5 +1,7 @@
 html,
-body {
+body,
+p,
+#root {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -10,4 +12,32 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0% 5%;
+}
+
+.col {
+  width:100%;
+  flex-direction: column;
+}
+
+h3 {
+  margin-bottom: 30%;
+  text-align: center;
+}
+
+h4 {
+  text-align: center;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.visible {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
 }
