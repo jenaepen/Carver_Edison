@@ -1,6 +1,41 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { Component } from "react";
 import CurrencyFormat from "react-currency-format";
 
+/***
+ * Budget class receives the name of the user from the props
+ * The class manages the following state:
+ * - name (provided from the props)
+ * - salary (salary value in Currency format)
+ * - salaryVal (salary value in Number format)
+ * - percent (percentage of salary the user wants to use Number format)
+ * - election (indicates if the user is done setting the percentage and salary Boolean format)
+ *
+ * The class has 3 methods besides render
+ * - setSalary (sets the salary and salaryVal)
+ * - setPercent (set the user percentage)
+ * - submit (set the election to true)
+ *
+ * render method:
+ * sets the current expense = salaryVal/12 * percent/100
+ * sets the current savings = salaryVal/12 * (1-percent/100)
+ *  The following is returned:
+ *  if the election is false, the following is visible
+ *    - Welcome to your monthly budget [name]
+ *    - input range slider where min = 0 max = 30 (it invokes setPercent)
+ *    - [percent]
+ *    - [salary] as an input (it invokes setSalary)
+ *    - submit button (it invokes submit)
+ *  else
+ *    - Thank You [name]
+ *    - Your Election [percent]
+ *    - [salary] as a text
+ *
+ *  The following is always visible
+ *    - Your Salary [salary]
+ *    - Your Expense [expense] (from render)
+ *    - Your Savings [savings] (from render)
+ */
 class Budget extends Component {
   constructor(props) {
     super(props);
@@ -8,43 +43,22 @@ class Budget extends Component {
       name: this.props.name,
       salary: 100000,
       salaryVal: 100000,
-      expense: "",
       percent: 0,
-      savings: "",
       election: false
     };
 
     this.setSalary = this.setSalary.bind(this);
-    this.setExpenseAndSavings = this.setExpenseAndSavings.bind(this);
     this.setPercent = this.setPercent.bind(this);
     this.submit = this.submit.bind(this);
-  }
-
-  componentDidMount() {
-    this.setExpenseAndSavings();
   }
 
   setSalary(values) {
     const { formattedValue, value } = values;
     this.setState({ salary: formattedValue, salaryVal: value });
-    this.setExpenseAndSavings();
-  }
-
-  setExpenseAndSavings() {
-    let newValue = (this.state.salaryVal / 12) * (this.state.percent / 100);
-    let savings = (this.state.salaryVal / 12) * (1 - this.state.percent / 100);
-
-    this.setState({
-      expense: newValue,
-      savings: savings
-    });
   }
 
   setPercent(e) {
-    this.setState({
-      percent: e.target.value
-    });
-    this.setExpenseAndSavings();
+    this.setState({ percent: e.target.value });
   }
 
   submit() {
@@ -52,6 +66,9 @@ class Budget extends Component {
   }
 
   render() {
+    let expense = (this.state.salaryVal / 12) * (this.state.percent / 100);
+    let savings = (this.state.salaryVal / 12) * (1 - this.state.percent / 100);
+
     return (
       <div className="center col">
         {!this.state.election ? (
@@ -112,7 +129,7 @@ class Budget extends Component {
         <span className="form">
           <label>Your Expense</label>
           <CurrencyFormat
-            value={this.state.expense}
+            value={expense}
             displayType={"text"}
             thousandSeparator={true}
             prefix={"$"}
@@ -122,10 +139,11 @@ class Budget extends Component {
         </span>
 
         <br />
+
         <span className="form">
           <label>Your Savings</label>
           <CurrencyFormat
-            value={this.state.savings}
+            value={savings}
             displayType={"text"}
             thousandSeparator={true}
             prefix={"$"}
@@ -133,6 +151,7 @@ class Budget extends Component {
             fixedDecimalScale={true}
           />
         </span>
+
         {!this.state.election ? (
           <button onClick={this.submit}>Submit</button>
         ) : null}
