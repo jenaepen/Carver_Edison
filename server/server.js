@@ -3,8 +3,10 @@ const app = express();
 const PORT = 3000;
 const path = require("path");
 
-// statically serve everything in the build folder on the route '/dist'
+// statically serve everything in the build folder on the route '/build'
 app.use("/build", express.static(path.join(__dirname, "../build")));
+
+// sends the html file
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../src/index.html"));
 });
@@ -21,6 +23,4 @@ app.use((err, req, res) => {
   res.status(errorObj.status).json(errorObj.message);
 });
 
-app.listen(PORT, () => {
-  console.log(`listening on ${PORT}`);
-});
+app.listen(PORT);
